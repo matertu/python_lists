@@ -14,6 +14,9 @@ class Plant:
     def get_age(self) -> int:
         return self._age
 
+    def get_grow_rate(self) -> float:
+        return self._grow_rate
+
     def set_height(self, height: float) -> None:
         if height < 0:
             print(f"{self._name}: Error, height can't be negative")
@@ -31,7 +34,7 @@ class Plant:
             print(f"Age updated: {self.get_age()} days")
 
     def grow(self) -> None:
-        self._height += self._grow_rate
+        self._height += self.get_grow_rate()
 
     def show(self) -> None:
         print(f"{self.get_name()}: {self._height:.1f}cm, {self.get_age()} days old")
