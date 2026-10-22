@@ -1,8 +1,12 @@
 class Plant:
-    def __init__(self, name: str, height: float, age: int):
+    def __init__(self, name: str, height: float, age: int) -> None:
+        self._initialized: bool = False
         self._name: str = name
-        self._height: float = height
-        self._age: int = age
+        self._height: float = 0
+        self._age: int = 0
+        self.set_height(height)
+        self.set_age(age)
+        self._initialized = True
 
     def get_name(self) -> str:
         return self._name
@@ -15,19 +19,23 @@ class Plant:
 
     def set_height(self, height: float) -> None:
         if height < 0:
-            print(f"{self._name}: Error, height can't be negative")
-            print("Height update rejected")
-        else:
-            self._height = height
-            print(f"Height updated: {self.get_height():.1f}cm")
+            if self._initialized:
+                print(f"{self._name}: Error, height can't be negative")
+                print("Height update rejected")
+            return
+        self._height = float(height)
+        if self._initialized:
+            print(f"Height updated: {self._height:.1f}cm")
 
     def set_age(self, age: int) -> None:
         if age < 0:
-            print(f"{self._name}: Error, age can't be negative")
-            print("Age update rejected")
-        else:
-            self._age = int(age)
-            print(f"Age updated: {self.get_age()} days")
+            if self._initialized:
+                print(f"{self._name}: Error, age can't be negative")
+                print("Age update rejected")
+            return
+        self._age = int(age)
+        if self._initialized:
+            print(f"Age updated: {self._age} days")
 
     def show(self) -> None:
         print(
@@ -43,11 +51,16 @@ def main() -> None:
     print("Plant created: ", end="")
     rose.show()
     print()
+
+    """change with valid values"""
     rose.set_height(25)
     rose.set_age(30)
     print()
+
+    """change with invalid values (negative)"""
     rose.set_height(-1)
     rose.set_age(-1)
+
     print("\nCurrent state: ", end="")
     rose.show()
 
